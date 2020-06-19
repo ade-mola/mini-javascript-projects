@@ -37,22 +37,29 @@ const pAequorFactory = (number, dnaBases) => {
 
     // Compare two different DNAs and return percentage of identical bases.
     compareDNA (pAequorObj) {
-      console.log(`\nDNA ${this.specimenNum} strand: ${this.dna}`);
-      console.log(`DNA ${pAequorObj.specimenNum} strand: ${pAequorObj.dna}\n`);
-
-      if (this.dna === pAequorObj.dna) {
-        console.log('Both specimens have identical DNA.')
-      };
+      console.log(`\nDNA ${this.specimenNum} sequence: ${this.dna}`);
+      console.log(`DNA ${pAequorObj.specimenNum} sequence: ${pAequorObj.dna}\n`);
 
       let identicalDNA = 0;
+      
       for (let i = 0; i < this.dna.length; i++) {
         if (this.dna[i] === pAequorObj.dna[i]) {
           identicalDNA++;
         }
       };
 
-      console.log(`Number of identical bases: ${identicalDNA}`)
+      console.log(`Number of identical bases: ${identicalDNA}`);
       console.log(`Percentage of identical DNA bases between specimen ${this.specimenNum} and specimen ${pAequorObj.specimenNum}: ${((identicalDNA / this.dna.length) * 100).toFixed(2)}%`);
+    },
+
+    willLikelySurvive () {
+      const importantBases = this.dna.filter(base => base === 'C' || base ==='G');
+      const survivalPercentage = (importantBases.length / this.dna.length).toFixed(2);
+      if (survivalPercentage >= .6) {
+        console.log(`Greater chance of survival. Percentage of C and G bases is ${survivalPercentage * 100}%`);
+      } else {
+        console.log(`Lesser chance of survival. Percentage of C and G bases is ${survivalPercentage * 100}%`);
+      } 
     }
   }
 };
@@ -72,6 +79,10 @@ const pAequorFactory = (number, dnaBases) => {
 // const pAequor2 = pAequorFactory(1000, mockUpStrand());
 
 // pAequor1.compareDNA(pAequor2);
+// console.log('p. Aequor 1: ');
+// pAequor1.willLikelySurvive();
+// console.log('p. Aequor 2: ');
+// pAequor2.willLikelySurvive();
 
 
 
