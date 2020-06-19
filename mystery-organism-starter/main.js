@@ -25,23 +25,53 @@ const pAequorFactory = (number, dnaBases) => {
       const generatedBase = returnRandBase();
 
       if (this.dna[randomIndex] === generatedBase) {``
-        console.log(`New DNA base '${generatedBase}' is identical to current base '${this.dna[randomIndex]}'`);
+        console.log(`New DNA base '${generatedBase}' is identical to current base '${this.dna[randomIndex]}\n'`);
         return this.dna;
       } else {
-        console.log(`----------------\nOriginal DNA base: ${this.dna[randomIndex]} at index: ${randomIndex}`);
+        console.log(`Original DNA base: ${this.dna[randomIndex]} at index: ${randomIndex}`);
         this.dna[randomIndex] = generatedBase;
         console.log(`Newly inserted DNA base: ${this.dna[randomIndex]} at index: ${randomIndex}\n----------------\n`);
         return this.dna;
       }
+    },
+
+    // Compare two different DNAs and return percentage of identical bases.
+    compareDNA (pAequorObj) {
+      console.log(`\nDNA ${this.specimenNum} strand: ${this.dna}`);
+      console.log(`DNA ${pAequorObj.specimenNum} strand: ${pAequorObj.dna}\n`);
+
+      if (this.dna === pAequorObj.dna) {
+        console.log('Both specimens have identical DNA.')
+      };
+
+      let identicalDNA = 0;
+      for (let i = 0; i < this.dna.length; i++) {
+        if (this.dna[i] === pAequorObj.dna[i]) {
+          identicalDNA++;
+        }
+      };
+
+      console.log(`Number of identical bases: ${identicalDNA}`)
+      console.log(`Percentage of identical DNA bases between specimen ${this.specimenNum} and specimen ${pAequorObj.specimenNum}: ${((identicalDNA / this.dna.length) * 100).toFixed(2)}%`);
     }
   }
 };
 
-let test = pAequorFactory(1, mockUpStrand());
-// console.log(test)
-console.log(test.dna)
-test.mutate()
-console.log(test.dna);
+// let test = pAequorFactory(1, mockUpStrand());
+// // console.log(test)
+// console.log(test.dna)
+// test.mutate()
+// console.log(test.dna);
+
+// const pAequor = pAequorFactory(1000, mockUpStrand());
+// console.log(`pAequor BEFORE mutation\nSpecimen: ${pAequor.specimenNum}\nDNA Strand: ${pAequor.dna}\n`);
+// pAequor.mutate();
+// console.log(`pAequor AFTER mutation\nSpecimen: ${pAequor.specimenNum}\nDNA Strand: ${pAequor.dna}`);
+
+// const pAequor1 = pAequorFactory(999, mockUpStrand());
+// const pAequor2 = pAequorFactory(1000, mockUpStrand());
+
+// pAequor1.compareDNA(pAequor2);
 
 
 
