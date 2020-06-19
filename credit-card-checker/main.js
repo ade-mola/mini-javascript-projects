@@ -23,7 +23,7 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
 
 
-// Uses the Luhn Algorithm to validate credit cards.
+// Uses the Luhn Algorithm to validate a single credit card.
 const validateCred = (cardArray) => {
     cardArray.reverse();
     let sum = 0;
@@ -46,9 +46,10 @@ const validateCred = (cardArray) => {
     return sum % 10 === 0 ? 'Credit Card is Valid!' : 'Bad!';  
 };
 
-// // Test functions:
+// Test functions:
 // console.log(validateCred(valid1)); // Should print 'Credit Card is Valid!'
 // console.log(validateCred(invalid1)); // Should print 'Bad!'
+
 
 // Find invalid credit cards in a nested array. 
 const findInvalidCards = (cards) => {
@@ -63,11 +64,53 @@ const findInvalidCards = (cards) => {
     return invalidCards;
 };
 
-// // Test function
+// Test function
 // console.log(findInvalidCards([valid1, valid2, valid3, valid4, valid5]));// Shouldn't print anything
 // console.log(findInvalidCards([invalid1, invalid2, invalid3, invalid4, invalid5])); // Should print all of the numbers
 
-console.log(findInvalidCards(batch)); // Test what the mystery numbers are
+
+// Identify the companies with bad cards
+const idInvalidCardCompanies = (cardBatch) => {
+    const invalidArray = findInvalidCards(cardBatch);
+    const companies = [];
+
+    for(let i=0; i < invalidArray.length; i++) {
+      const firstDigit = invalidArray[i][0];
+      switch (firstDigit) {
+        case 3:
+            if (!companies.includes('Amex')) {
+                companies.push('Amex');
+                }
+            break;
+        case 4:
+            if (!companies.includes('Visa')) {
+                companies.push('Visa');
+                }
+            break;
+        case 5:
+            if (!companies.includes('Mastercard')) {
+                companies.push('Mastercard');
+                }
+            break;
+        case 6:
+            if (!companies.includes('Discover')) {
+                companies.push('Discover');
+                }
+            break;
+        default:
+          console.log('Company not found')
+          break;
+      }
+    }
+
+    return companies;
+};
+
+// Test function
+// console.log(idInvalidCardCompanies([invalid1])); // Should print['visa']
+// console.log(idInvalidCardCompanies([invalid2])); // Should print ['mastercard']
 
 
-
+// Test batch cards
+// console.log(findInvalidCards(batch)); // Test what the mystery numbers are
+// console.log(idInvalidCardCompanies(batch)); // Find out which companies have mailed out invalid cards
