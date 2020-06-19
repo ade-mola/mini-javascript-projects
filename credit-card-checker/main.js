@@ -25,12 +25,12 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 // Uses the Luhn Algorithm to validate credit cards.
 const validateCred = (cardArray) => {
-    const reverseArray = cardArray.reverse();
+    cardArray.reverse();
     let sum = 0;
   
-    for (let i = 0; i < reverseArray.length; i++) {
+    for (let i = 0; i < cardArray.length; i++) {
       if (i !== 0 && i % 2 !== 0) {
-        let double = reverseArray[i] * 2;
+        let double = cardArray[i] * 2;
         if (double > 9) {
           double -= 9;
           sum += double;
@@ -38,20 +38,36 @@ const validateCred = (cardArray) => {
           sum += double;
         }
       } else {
-        sum += reverseArray[i]
+        sum += cardArray[i]
       }
     }
 
+    cardArray.reverse();
     return sum % 10 === 0 ? 'Credit Card is Valid!' : 'Bad!';  
 };
 
-// Test functions:
-console.log(validateCred(valid1)); // Should print 'Credit Card is Valid!'
-console.log(validateCred(invalid1)); // Should print 'Bad!'
+// // Test functions:
+// console.log(validateCred(valid1)); // Should print 'Credit Card is Valid!'
+// console.log(validateCred(invalid1)); // Should print 'Bad!'
 
+// Find invalid credit cards in a nested array. 
+const findInvalidCards = (cards) => {
+    const invalidCards = [];
 
+    for (let i=0; i < cards.length; i++) {
+      if (validateCred(cards[i]) === 'Bad!') {
+        invalidCards.push(cards[i])
+      }
+    }
 
+    return invalidCards;
+};
 
+// // Test function
+// console.log(findInvalidCards([valid1, valid2, valid3, valid4, valid5]));// Shouldn't print anything
+// console.log(findInvalidCards([invalid1, invalid2, invalid3, invalid4, invalid5])); // Should print all of the numbers
+
+console.log(findInvalidCards(batch)); // Test what the mystery numbers are
 
 
 
