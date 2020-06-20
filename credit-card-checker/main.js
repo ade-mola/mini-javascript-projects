@@ -46,7 +46,7 @@ const validateCred = (cardArray) => {
     return sum % 10 === 0 ? 'Credit Card is Valid!' : 'Bad!';  
 };
 
-// Test functions:
+// Test validateCred() function:
 // console.log(validateCred(valid1)); // Should print 'Credit Card is Valid!'
 // console.log(validateCred(invalid1)); // Should print 'Bad!'
 
@@ -64,7 +64,7 @@ const findInvalidCards = (cards) => {
     return invalidCards;
 };
 
-// Test function
+// Test findInvalidCards() function
 // console.log(findInvalidCards([valid1, valid2, valid3, valid4, valid5]));// Shouldn't print anything
 // console.log(findInvalidCards([invalid1, invalid2, invalid3, invalid4, invalid5])); // Should print all of the numbers
 
@@ -109,6 +109,44 @@ const idInvalidCardCompanies = (cardBatch) => {
 // Test function
 // console.log(idInvalidCardCompanies([invalid1])); // Should print['visa']
 // console.log(idInvalidCardCompanies([invalid2])); // Should print ['mastercard']
+
+
+// Generate an array of a valid credit card numbers
+const generateNewCard = (desiredLength) => {
+  const cardsArray = []; // this will serve as an array of credit cards - a database
+  const firstDigit = [3, 4, 5, 6]; // first digit of popular credit card companis
+
+  // This creates an array of credit card numbers
+  const createCard = () => {
+    const newCard = [];
+    do {
+      x = firstDigit[Math.floor(Math.random() * 4)];
+      newCard.push(x);
+      numbers = Math.floor(Math.random() * 10);
+      newCard.push(numbers);
+    } while (newCard.length < desiredLength) 
+
+    return newCard;
+  }
+  
+  // add the array of credit card numbers from createCard() into cardsArray
+  do {
+    cards = createCard();
+    cardsArray.push(cards);
+  } while (cardsArray.length < 100) // cardsArray will consist of 100 valid and invalid cards
+
+  // loop through our cardsArray database and return the first valid card
+  for (let i = 0; i < cardsArray.length; i++) {
+    if (validateCred(cardsArray[i]) === 'Credit Card is Valid!') {
+      console.log('This is a valid credit card: ')
+      return cardsArray[i];
+    }
+  }
+};
+
+// Test generateNewCard() function
+// console.log(generateNewCard(16))
+// console.log(generateNewCard(10))
 
 
 // Test batch cards
